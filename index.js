@@ -15,7 +15,7 @@ const MIB_OID_MARKER_LEVELS = ".1.3.6.1.2.1.43.11.1.1.9.1"
 const MIB_OID_ALERTS = ".1.3.6.1.2.1.43.18.1.1"
 
 const ipp_port = 9100
-const snmp_port = 161
+const snmp_port = 1308
 const web_port = 5000
 
 const printer = new Printer({
@@ -40,7 +40,7 @@ printer.on('job', function (job) {
     job.attributes().forEach(function(attribute) {
         console.log(attribute.name + "=" + attribute.value)
     }, this);
-        
+
     is_printing = true
 
     var job_id = job.id
@@ -60,7 +60,7 @@ printer.on('job', function (job) {
     job.on('end', function () {
 
         var job = jobs[job_id - 1]
-        
+
         job.status = "Printed"
         job.href = 'printjobs/' + filename
 
@@ -77,92 +77,92 @@ printer.on('error', function(error) {
 })
 
 agent.request({ oid: MIB_OID_HOSTNAME, handler: function (prq) {
-	var nodename = os.hostname();
-	var val = snmp.data.createData({ type: 'OctetString', value: nodename });
+  var nodename = os.hostname();
+  var val = snmp.data.createData({ type: 'OctetString', value: nodename });
 
-	snmp.provider.readOnlyScalar(prq, val);
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_PRINTER_STATE, handler: function (prq) {
-	var MIB_PRINTER_STATE_IDLE = 3
+  var MIB_PRINTER_STATE_IDLE = 3
     var MIB_PRINTER_STATE_PRINTING = 4
 
-	var val = snmp.data.createData({ type: 'Integer', value: (is_printing) ? MIB_PRINTER_STATE_PRINTING : MIB_PRINTER_STATE_IDLE });
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'Integer', value: (is_printing) ? MIB_PRINTER_STATE_PRINTING : MIB_PRINTER_STATE_IDLE });
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_DEVICE_STATE, handler: function (prq) {
-	var MIB_DEVICE_STATE_RUNNING = 2
-	var val = snmp.data.createData({ type: 'Integer', value: MIB_DEVICE_STATE_RUNNING });
+  var MIB_DEVICE_STATE_RUNNING = 2
+  var val = snmp.data.createData({ type: 'Integer', value: MIB_DEVICE_STATE_RUNNING });
 
-	snmp.provider.readOnlyScalar(prq, val);
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_MARKER_NAMES + ".1", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value:"Ink"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value:"Ink"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_MARKER_LEVELS + ".1", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'Integer', value: (has_ink) ? 100 : 0});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'Integer', value: (has_ink) ? 100 : 0});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_INPUT_NAMES + ".1", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value:"Input Tray"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value:"Input Tray"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_INPUT_LEVELS + ".1", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'Integer', value: (has_paper) ? -3 : 0});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'Integer', value: (has_paper) ? -3 : 0});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".1", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".2", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".3", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".4", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".5", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".6", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".7", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.request({ oid: MIB_OID_ALERTS + ".8", handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0"});
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0"});
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 // Some clients get confused by the standard end of mib response sent by snmpjs, this is a workaround
 const MIB_OID_END_OF_VIEW = ".1.3.6.1.2.1.43.99.1.1.9.1"
 agent.request({ oid: MIB_OID_END_OF_VIEW, handler: function (prq) {
-	var val = snmp.data.createData({ type: 'OctetString', value: "0" });
-	snmp.provider.readOnlyScalar(prq, val);
+  var val = snmp.data.createData({ type: 'OctetString', value: "0" });
+  snmp.provider.readOnlyScalar(prq, val);
 }});
 
 agent.bind({ family: 'udp4', port: snmp_port });
@@ -195,6 +195,10 @@ app.post('/printer', function (req, res) {
 app.listen(web_port, function () {
   console.log('Frontend listening on port ' + web_port)
 })
+
+fs.mkdir('./public/printjobs', { recursive: true }, (err) => {
+  if (err) throw err;
+});
 
 console.log('IPP listening on port ' + ipp_port)
 console.log('SNMP listening on port ' + snmp_port)
