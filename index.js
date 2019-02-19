@@ -238,7 +238,7 @@ agent.request({
 agent.bind({ family: "udp4", port: snmp_port });
 
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/printer", function(req, res) {
   res.send({
