@@ -265,7 +265,7 @@ app.listen(web_port, function() {
   console.log("Frontend listening on port " + web_port);
 });
 
-fs.mkdir("./public/printjobs", { recursive: true }, err => {
+fs.mkdir(__dirname + "/public/printjobs", { recursive: true }, err => {
   if (err) throw err;
 });
 
