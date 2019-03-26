@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "~1.17.1",
     "express": "^4.15.2",
     "ipp-printer": "^1.0.0",
+    "body-parser": "~1.17.1",
     "snmpjs": "git+https://github.com/VoltServer/node-snmpjs.git"
   }
 }
