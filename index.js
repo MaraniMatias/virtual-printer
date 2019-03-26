@@ -286,4 +286,5 @@ Object.keys(ifaces).forEach(ifname => {
     ip = iface.address;
   });
 });
+console.log("Set driver to:\nname:\tGeneric PDF\nurl\tipp://localhost:9100/ipp/printer")
 console.log(`External access on http://${ip}:${web_port}`);
